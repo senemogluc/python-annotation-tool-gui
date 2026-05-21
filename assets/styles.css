@@ -1,0 +1,41 @@
+/* ── Annotation buttons ────────────────────────────────────────────────────────
+   Targets the last st.columns block on the page.
+   The annotation button row MUST remain the last st.columns call in app.py.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+div[data-testid="stHorizontalBlock"]:last-child
+    div[data-testid="column"]:nth-child(1) button {
+    background-color: #28a745 !important;
+    color: white !important;
+    border: 2px solid #28a745 !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+    height: 3.2rem !important;
+}
+
+div[data-testid="stHorizontalBlock"]:last-child
+    div[data-testid="column"]:nth-child(2) button {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border: 2px solid #dc3545 !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+    height: 3.2rem !important;
+}
+
+div[data-testid="stHorizontalBlock"]:last-child
+    div[data-testid="column"]:nth-child(3) button {
+    background-color: #e6a817 !important;
+    color: #212529 !important;
+    border: 2px solid #e6a817 !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+    height: 3.2rem !important;
+}
+
+div[data-testid="stHorizontalBlock"]:last-child
+    div[data-testid="column"] button:hover {
+    filter: brightness(0.9) !important;
+    transform: translateY(-1px) !important;
+    transition: all 0.1s ease !important;
+}
