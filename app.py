@@ -4,10 +4,14 @@ from pathlib import Path
 import streamlit as st
 
 from utils.annotation import (
+    DEMO_FILENAME,
+    current_label,
+    go_to,
     list_raw_json_files,
+    load_json,
     pending_indices,
     record_annotation,
-    resolve_load,
+    reset_annotations,
     to_nested,
 )
 
@@ -33,29 +37,20 @@ for _k, _v in [
         st.session_state[_k] = _v
 
 
-DEMO_FILENAME = "demo_sample_for_annotators.json"
-
-
 def _start_annotating(df, filename, summary, display_name) -> None:
-    pending = pending_indices(df)
     st.session_state.df = df
     st.session_state.filename = filename
     st.session_state.summary = summary
     st.session_state.display_name = display_name
-    st.session_state.current_idx = pending[0] if pending else None
+    st.session_state.current_idx = df.index[0] if len(df) else None
     st.rerun()
 
 
 def _dataset_labels(paths: list[Path]) -> dict[Path, str]:
-    labels: dict[Path, str] = {}
-    dataset_num = 1
-    for p in paths:
-        if p.name == DEMO_FILENAME:
-            labels[p] = "🧪 Demo / Practice Dataset"
-        else:
-            labels[p] = f"Dataset {dataset_num}"
-            dataset_num += 1
-    return labels
+    return {
+        p: (f"Mock contrast set" if p.name == DEMO_FILENAME else p.name)
+        for p in paths
+    }
 
 
 # ── Instructions screen ─────────────────────────────────────────────────────────
@@ -84,25 +79,24 @@ if st.session_state.df is None:
         labels = _dataset_labels(raw_files)
         choice = st.selectbox("Available datasets", raw_files, format_func=lambda p: labels[p])
         if st.button("📂 Load selected dataset"):
-            df, filename, summary = resolve_load(choice.name, choice)
-            _start_annotating(df, filename, summary, labels[choice])
+            df, summary = load_json(choice)
+            _start_annotating(df, choice.name, summary, labels[choice])
     else:
         st.info("No datasets are available right now.")
 
     st.markdown("---")
     uploaded = st.file_uploader("Or upload a .json file", type=["json"])
     if uploaded:
-        df, filename, summary = resolve_load(uploaded.name, uploaded)
-        _start_annotating(df, filename, summary, uploaded.name)
+        df, summary = load_json(uploaded)
+        _start_annotating(df, uploaded.name, summary, uploaded.name)
 
     st.stop()
 
 
 # ── Annotation screen ──────────────────────────────────────────────────────────
 df = st.session_state.df
-pending = pending_indices(df)
 total = len(df)
-done_count = total - len(pending)
+done_count = total - len(pending_indices(df))
 
 # Top bar — title + action buttons
 col_title, col_actions = st.columns([3, 2])
@@ -112,7 +106,7 @@ with col_title:
 
 with col_actions:
     st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
-    btn_dl, btn_new = st.columns(2)
+    btn_dl, btn_reset, btn_new = st.columns(3)
     with btn_dl:
         payload = json.dumps(to_nested(df, st.session_state.summary), indent=2).encode()
         download_name = f"{Path(st.session_state.filename).stem}_annotated.json"
@@ -123,8 +117,12 @@ with col_actions:
             mime="application/json",
             use_container_width=True,
         )
+    with btn_reset:
+        if st.button("🔄 Start over", use_container_width=True):
+            reset_annotations()
+            st.rerun()
     with btn_new:
-        if st.button("📂 Load a new file", use_container_width=True):
+        if st.button("⬅ Back to dataset selection", use_container_width=True):
             st.session_state.df = None
             st.session_state.filename = None
             st.session_state.display_name = None
@@ -132,28 +130,44 @@ with col_actions:
             st.session_state.current_idx = None
             st.rerun()
 
+st.caption("⚠️ Progress is not saved automatically — download your annotations before leaving this page.")
+
 st.progress(done_count / total if total else 0)
 st.markdown(f"**{done_count} / {total}** rows annotated")
 
-# ── All done ───────────────────────────────────────────────────────────────────
-if st.session_state.current_idx is None:
-    st.success("🎉 All rows annotated! Download your file with the button above.")
+if total and done_count == total:
+    st.success("🎉 All rows annotated! Download your file with the button above. You can still review or change any row below.")
+
+if total == 0:
     st.stop()
 
 # ── Active row ─────────────────────────────────────────────────────────────────
 idx = st.session_state.current_idx
 row = df.loc[idx]
+pos = df.index.get_loc(idx)
 
 st.markdown("---")
-st.markdown(
-    f"## Row {idx + 1} &nbsp;·&nbsp; "
-    f"<span style='color:gray;font-size:1rem'>{done_count}/{total} annotated</span>",
-    unsafe_allow_html=True,
-)
 
+nav_prev, nav_pos, nav_next = st.columns([1, 3, 1])
+with nav_prev:
+    if st.button("⬅ Previous", use_container_width=True, disabled=pos == 0):
+        go_to(-1)
+        st.rerun()
+with nav_pos:
+    st.markdown(
+        f"<div style='text-align:center'>Row {pos + 1} of {total}</div>",
+        unsafe_allow_html=True,
+    )
+with nav_next:
+    if st.button("Next ➡", use_container_width=True, disabled=pos == total - 1):
+        go_to(1)
+        st.rerun()
+
+label = current_label(row)
 st.markdown(
     f"**Question Type:** `{row.get('question_type') or '—'}` &nbsp;&nbsp; "
-    f"**Perturbation Type:** `{row.get('perturbation_type') or '—'}`"
+    f"**Perturbation Type:** `{row.get('perturbation_type') or '—'}` &nbsp;&nbsp; "
+    f"**Current label:** {label or '_not yet annotated_'}"
 )
 
 st.markdown("---")

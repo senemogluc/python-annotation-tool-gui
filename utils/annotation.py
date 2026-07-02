@@ -6,7 +6,9 @@ import streamlit as st
 
 ANNOT_COL = "annotations"
 RAW_DIR = Path("data/raw")
-ANNOTATED_DIR = Path("data/annotated")
+DEMO_FILENAME = "demo_sample_for_annotators.json"
+
+LABELS = {1: "✅ Preserve", 0: "❌ Alter", -1: "❓ Not Sure"}
 
 
 def list_raw_json_files() -> list[Path]:
@@ -41,19 +43,12 @@ def load_json(source) -> tuple[pd.DataFrame, dict | None]:
     return _flatten(data), summary
 
 
-def resolve_load(filename: str, raw_source) -> tuple[pd.DataFrame, str, dict | None]:
-    """Load annotations from data/annotated/<filename> if present (resume),
-    otherwise load fresh from raw_source (path or uploaded file-like)."""
-    annotated_path = ANNOTATED_DIR / filename
-    if annotated_path.exists():
-        df, summary = load_json(annotated_path)
-    else:
-        df, summary = load_json(raw_source)
-    return df, filename, summary
-
-
 def pending_indices(df: pd.DataFrame) -> list[int]:
     return df[df[ANNOT_COL].isna()].index.tolist()
+
+
+def current_label(row) -> str | None:
+    return LABELS.get(row.get(ANNOT_COL))
 
 
 def _to_native(value):
@@ -84,14 +79,25 @@ def to_nested(df: pd.DataFrame, summary: dict | None) -> dict:
     return nested
 
 
-def save_annotated(df: pd.DataFrame, filename: str, summary: dict | None) -> None:
-    ANNOTATED_DIR.mkdir(parents=True, exist_ok=True)
-    (ANNOTATED_DIR / filename).write_text(json.dumps(to_nested(df, summary), indent=2))
-
-
 def record_annotation(value: int) -> None:
+    """Label the current row and advance to the next one, if any."""
     df = st.session_state.df
-    df.at[st.session_state.current_idx, ANNOT_COL] = value
-    save_annotated(df, st.session_state.filename, st.session_state.summary)
-    remaining = pending_indices(df)
-    st.session_state.current_idx = remaining[0] if remaining else None
+    idx = st.session_state.current_idx
+    df.at[idx, ANNOT_COL] = value
+    if idx < df.index[-1]:
+        st.session_state.current_idx = df.index[df.index.get_loc(idx) + 1]
+
+
+def go_to(delta: int) -> None:
+    """Move current_idx forward/backward by delta, clamped to the dataframe's bounds."""
+    df = st.session_state.df
+    pos = df.index.get_loc(st.session_state.current_idx) + delta
+    pos = max(0, min(len(df) - 1, pos))
+    st.session_state.current_idx = df.index[pos]
+
+
+def reset_annotations() -> None:
+    """Clear all annotations for the currently loaded file and restart from row 1."""
+    df = st.session_state.df
+    df[ANNOT_COL] = pd.NA
+    st.session_state.current_idx = df.index[0] if len(df) else None
