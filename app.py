@@ -1,16 +1,14 @@
-import io
+import json
 from pathlib import Path
 
-import pandas as pd
 import streamlit as st
 
 from utils.annotation import (
-    ANNOT_COL,
-    find_bert_col,
-    find_confidence_col,
-    load_uploaded_file,
+    list_raw_json_files,
     pending_indices,
     record_annotation,
+    resolve_load,
+    to_nested,
 )
 
 st.set_page_config(page_title="Annotation Tool", page_icon="🏷️", layout="wide")
@@ -23,36 +21,45 @@ def _load_css(path: str) -> None:
 
 _load_css("assets/styles.css")
 
-for _k, _v in [("df", None), ("filename", None), ("current_idx", None)]:
+for _k, _v in [("df", None), ("filename", None), ("current_idx", None), ("summary", None)]:
     if _k not in st.session_state:
         st.session_state[_k] = _v
+
+
+def _start_annotating(df, filename, summary) -> None:
+    pending = pending_indices(df)
+    st.session_state.df = df
+    st.session_state.filename = filename
+    st.session_state.summary = summary
+    st.session_state.current_idx = pending[0] if pending else None
+    st.rerun()
 
 
 # ── Upload screen ──────────────────────────────────────────────────────────────
 if st.session_state.df is None:
     st.title("🏷️ Annotation Tool")
-    st.markdown("Upload an Excel file to start annotating rows.")
+    st.markdown("Pick a JSON file from `data/raw/` or upload one to start annotating.")
 
-    uploaded = st.file_uploader("Choose an .xlsx file", type=["xlsx"])
+    raw_files = list_raw_json_files()
+    if raw_files:
+        choice = st.selectbox("Files in data/raw/", raw_files, format_func=lambda p: p.name)
+        if st.button("📂 Load selected file"):
+            df, filename, summary = resolve_load(choice.name, choice)
+            _start_annotating(df, filename, summary)
+    else:
+        st.info("No JSON files found in `data/raw/`.")
+
+    st.markdown("---")
+    uploaded = st.file_uploader("Or upload a .json file", type=["json"])
     if uploaded:
-        df, filename = load_uploaded_file(uploaded)
-        if df is None:
-            st.error("File must contain a `bertscore_f1` or `bertscore` column.")
-            st.stop()
-
-        pending = pending_indices(df)
-        st.session_state.df = df
-        st.session_state.filename = filename
-        st.session_state.current_idx = pending[0] if pending else None
-        st.rerun()
+        df, filename, summary = resolve_load(uploaded.name, uploaded)
+        _start_annotating(df, filename, summary)
 
     st.stop()
 
 
 # ── Annotation screen ──────────────────────────────────────────────────────────
 df = st.session_state.df
-bert_col = find_bert_col(df)
-conf_col = find_confidence_col(df)
 pending = pending_indices(df)
 total = len(df)
 done_count = total - len(pending)
@@ -67,19 +74,19 @@ with col_actions:
     st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
     btn_dl, btn_new = st.columns(2)
     with btn_dl:
-        buf = io.BytesIO()
-        df.to_excel(buf, index=False)
+        payload = json.dumps(to_nested(df, st.session_state.summary), indent=2).encode()
         st.download_button(
             label="💾 Download annotations",
-            data=buf.getvalue(),
+            data=payload,
             file_name=st.session_state.filename,
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            mime="application/json",
             use_container_width=True,
         )
     with btn_new:
         if st.button("📂 Load a new file", use_container_width=True):
             st.session_state.df = None
             st.session_state.filename = None
+            st.session_state.summary = None
             st.session_state.current_idx = None
             st.rerun()
 
@@ -102,20 +109,10 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Perturbation type — full text, no truncation
-pert_type = row.get("perturbation_type") or "—"
-st.markdown(f"**Perturbation Type:** `{pert_type}`")
-
-# Numeric metadata
-m1, m2, m3 = st.columns(3)
-with m1:
-    raw_bert = row.get(bert_col) if bert_col else None
-    st.metric("BERTScore F1", f"{float(raw_bert):.4f}" if pd.notna(raw_bert) else "—")
-with m2:
-    raw_conf = row.get(conf_col) if conf_col else None
-    st.metric("Confidence Score", f"{float(raw_conf):.4f}" if conf_col and pd.notna(raw_conf) else "—")
-with m3:
-    st.metric("NLI Label", row.get("nli_label") or "—")
+st.markdown(
+    f"**Question Type:** `{row.get('question_type') or '—'}` &nbsp;&nbsp; "
+    f"**Perturbation Type:** `{row.get('perturbation_type') or '—'}`"
+)
 
 st.markdown("---")
 
