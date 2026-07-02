@@ -1,0 +1,228 @@
+{
+  "1": [
+    {
+      "question_id": "demo0001",
+      "question_type": "lookup_text",
+      "question": "How many manufacturing plants does Aurora Kinetics operate?",
+      "context": [
+        {
+          "para_id": "p1",
+          "text": "Aurora Kinetics operates three manufacturing plants: one in Lyon, one in Porto, and one in Krakow."
+        }
+      ],
+      "answer": "three",
+      "unit": "",
+      "evidence": {
+        "para_id": "p1",
+        "char_start": 0,
+        "char_end": 88,
+        "text": "Aurora Kinetics operates four manufacturing plants: one in Lyon, one in Porto, and one in Krakow.",
+        "original_text": "Aurora Kinetics operates three manufacturing plants: one in Lyon, one in Porto, and one in Krakow."
+      },
+      "perturbation_target": "evidence",
+      "perturbation_type": "llm_evidence_lookuptext_alter",
+      "perturbed_text": "Aurora Kinetics operates four manufacturing plants: one in Lyon, one in Porto, and one in Krakow.",
+      "source_text": "Aurora Kinetics operates three manufacturing plants: one in Lyon, one in Porto, and one in Krakow.",
+      "source_claim": null,
+      "reason": "Demo example: the plant count was changed from three to four, contradicting the original claim.",
+      "strategy_used": "Changed the count from 'three' to 'four'.",
+      "claim_focus": null,
+      "claim_relevant_span": null,
+      "evidence_target_span": "three",
+      "preserve": false,
+      "nli_label": "contradiction",
+      "nli_confidence": 0.97,
+      "nli_per_model": {"demo-model": "contradiction"},
+      "judge_label": "altered",
+      "judge_score": 1.0,
+      "judge_scores_all": "1,1,1",
+      "judge_rationale": "Demo rationale: the numeric fact was changed.",
+      "bertscore_f1": 0.98,
+      "final_label": "altered",
+      "final_fusion_score": 0.01,
+      "evaluation_agreement": true
+    }
+  ],
+  "2": [
+    {
+      "question_id": "demo0002",
+      "question_type": "lookup_text",
+      "question": "Where is Aurora Kinetics headquartered?",
+      "context": [
+        {
+          "para_id": "p1",
+          "text": "Aurora Kinetics is headquartered in Amsterdam, the Netherlands."
+        }
+      ],
+      "answer": "Amsterdam, the Netherlands",
+      "unit": "",
+      "evidence": {
+        "para_id": "p1",
+        "char_start": 0,
+        "char_end": 55,
+        "text": "The Netherlands, specifically Amsterdam, is home to Aurora Kinetics' headquarters.",
+        "original_text": "Aurora Kinetics is headquartered in Amsterdam, the Netherlands."
+      },
+      "perturbation_target": "evidence",
+      "perturbation_type": "llm_evidence_lookuptext_preserve",
+      "perturbed_text": "The Netherlands, specifically Amsterdam, is home to Aurora Kinetics' headquarters.",
+      "source_text": "Aurora Kinetics is headquartered in Amsterdam, the Netherlands.",
+      "source_claim": null,
+      "reason": "Demo example: sentence restructured but the same location facts are preserved.",
+      "strategy_used": "Reworded the sentence while keeping the same meaning.",
+      "claim_focus": null,
+      "claim_relevant_span": null,
+      "evidence_target_span": "Amsterdam, the Netherlands",
+      "preserve": true,
+      "nli_label": "entailment",
+      "nli_confidence": 0.95,
+      "nli_per_model": {"demo-model": "entailment"},
+      "judge_label": "preserved",
+      "judge_score": 4.0,
+      "judge_scores_all": "4,4,4",
+      "judge_rationale": "Demo rationale: meaning is unchanged, only phrasing differs.",
+      "bertscore_f1": 0.91,
+      "final_label": "preserved",
+      "final_fusion_score": 0.97,
+      "evaluation_agreement": true
+    }
+  ],
+  "3": [
+    {
+      "question_id": "demo0003",
+      "question_type": "insight",
+      "question": "What does Aurora Kinetics' revenue growth in 2025 suggest about its market position?",
+      "context": [
+        {
+          "para_id": "p1",
+          "text": "Aurora Kinetics' revenue grew 12% year-over-year in 2025, outpacing the industry average of 5%."
+        }
+      ],
+      "answer": "Aurora Kinetics gained market share relative to competitors.",
+      "unit": "",
+      "evidence": {
+        "para_id": "p1",
+        "char_start": 0,
+        "char_end": 97,
+        "text": "Aurora Kinetics' revenue shrank 12% year-over-year in 2025, lagging behind the industry average of 5%.",
+        "original_text": "Aurora Kinetics' revenue grew 12% year-over-year in 2025, outpacing the industry average of 5%."
+      },
+      "perturbation_target": "evidence",
+      "perturbation_type": "llm_evidence_insight_alter",
+      "perturbed_text": "Aurora Kinetics' revenue shrank 12% year-over-year in 2025, lagging behind the industry average of 5%.",
+      "source_text": "Aurora Kinetics' revenue grew 12% year-over-year in 2025, outpacing the industry average of 5%.",
+      "source_claim": null,
+      "reason": "Demo example: growth was flipped to decline, reversing the insight's direction.",
+      "strategy_used": "Reversed the growth direction and comparison to the industry average.",
+      "claim_focus": null,
+      "claim_relevant_span": null,
+      "evidence_target_span": "grew 12% year-over-year",
+      "preserve": false,
+      "nli_label": "contradiction",
+      "nli_confidence": 0.96,
+      "nli_per_model": {"demo-model": "contradiction"},
+      "judge_label": "altered",
+      "judge_score": 1.0,
+      "judge_scores_all": "1,1,1",
+      "judge_rationale": "Demo rationale: the trend direction was reversed.",
+      "bertscore_f1": 0.89,
+      "final_label": "altered",
+      "final_fusion_score": 0.02,
+      "evaluation_agreement": true
+    }
+  ],
+  "4": [
+    {
+      "question_id": "demo0004",
+      "question_type": "insight",
+      "question": "What does Aurora Kinetics' investment in R&D imply about its strategic priorities?",
+      "context": [
+        {
+          "para_id": "p1",
+          "text": "Aurora Kinetics increased its R&D budget by 20% in 2025, signaling a focus on long-term innovation."
+        }
+      ],
+      "answer": "The company is prioritizing long-term innovation over short-term cost savings.",
+      "unit": "",
+      "evidence": {
+        "para_id": "p1",
+        "char_start": 0,
+        "char_end": 100,
+        "text": "In 2025, Aurora Kinetics raised its research and development spending by a fifth, pointing to a focus on long-term innovation.",
+        "original_text": "Aurora Kinetics increased its R&D budget by 20% in 2025, signaling a focus on long-term innovation."
+      },
+      "perturbation_target": "evidence",
+      "perturbation_type": "llm_evidence_insight_preserve",
+      "perturbed_text": "In 2025, Aurora Kinetics raised its research and development spending by a fifth, pointing to a focus on long-term innovation.",
+      "source_text": "Aurora Kinetics increased its R&D budget by 20% in 2025, signaling a focus on long-term innovation.",
+      "source_claim": null,
+      "reason": "Demo example: reworded with a synonym for R&D and 'a fifth' instead of '20%', same meaning.",
+      "strategy_used": "Paraphrased using synonyms and an equivalent fraction for the percentage.",
+      "claim_focus": null,
+      "claim_relevant_span": null,
+      "evidence_target_span": "increased its R&D budget by 20%",
+      "preserve": true,
+      "nli_label": "entailment",
+      "nli_confidence": 0.93,
+      "nli_per_model": {"demo-model": "entailment"},
+      "judge_label": "preserved",
+      "judge_score": 4.0,
+      "judge_scores_all": "4,4,4",
+      "judge_rationale": "Demo rationale: numeric equivalence and same implication preserved.",
+      "bertscore_f1": 0.88,
+      "final_label": "preserved",
+      "final_fusion_score": 0.95,
+      "evaluation_agreement": true
+    }
+  ],
+  "5": [
+    {
+      "question_id": "demo0005",
+      "question_type": "lookup_text",
+      "question": "When was Aurora Kinetics founded?",
+      "context": [
+        {
+          "para_id": "p1",
+          "text": "Aurora Kinetics was founded in 2011 by a group of robotics engineers."
+        }
+      ],
+      "answer": "2011",
+      "unit": "",
+      "evidence": {
+        "para_id": "p1",
+        "char_start": 0,
+        "char_end": 68,
+        "text": "Aurora Kinetics was founded in 2014 by a group of robotics engineers.",
+        "original_text": "Aurora Kinetics was founded in 2011 by a group of robotics engineers."
+      },
+      "perturbation_target": "evidence",
+      "perturbation_type": "llm_evidence_lookuptext_alter",
+      "perturbed_text": "Aurora Kinetics was founded in 2014 by a group of robotics engineers.",
+      "source_text": "Aurora Kinetics was founded in 2011 by a group of robotics engineers.",
+      "source_claim": null,
+      "reason": "Demo example: the founding year was changed from 2011 to 2014.",
+      "strategy_used": "Changed the year from '2011' to '2014'.",
+      "claim_focus": null,
+      "claim_relevant_span": null,
+      "evidence_target_span": "2011",
+      "preserve": false,
+      "nli_label": "contradiction",
+      "nli_confidence": 0.98,
+      "nli_per_model": {"demo-model": "contradiction"},
+      "judge_label": "altered",
+      "judge_score": 1.0,
+      "judge_scores_all": "1,1,1",
+      "judge_rationale": "Demo rationale: the founding date fact was changed.",
+      "bertscore_f1": 0.97,
+      "final_label": "altered",
+      "final_fusion_score": 0.01,
+      "evaluation_agreement": true
+    }
+  ],
+  "_summary": {
+    "question_type_counts": {
+      "lookup_text": {"altered": 2, "preserved": 1},
+      "insight": {"altered": 1, "preserved": 1}
+    }
+  }
+}

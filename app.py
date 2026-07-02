@@ -75,10 +75,11 @@ with col_actions:
     btn_dl, btn_new = st.columns(2)
     with btn_dl:
         payload = json.dumps(to_nested(df, st.session_state.summary), indent=2).encode()
+        download_name = f"{Path(st.session_state.filename).stem}_annotated.json"
         st.download_button(
             label="💾 Download annotations",
             data=payload,
-            file_name=st.session_state.filename,
+            file_name=download_name,
             mime="application/json",
             use_container_width=True,
         )
