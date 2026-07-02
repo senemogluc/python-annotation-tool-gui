@@ -24,6 +24,7 @@ _load_css("assets/styles.css")
 for _k, _v in [
     ("df", None),
     ("filename", None),
+    ("display_name", None),
     ("current_idx", None),
     ("summary", None),
     ("instructions_ack", False),
@@ -32,13 +33,29 @@ for _k, _v in [
         st.session_state[_k] = _v
 
 
-def _start_annotating(df, filename, summary) -> None:
+DEMO_FILENAME = "demo_sample_for_annotators.json"
+
+
+def _start_annotating(df, filename, summary, display_name) -> None:
     pending = pending_indices(df)
     st.session_state.df = df
     st.session_state.filename = filename
     st.session_state.summary = summary
+    st.session_state.display_name = display_name
     st.session_state.current_idx = pending[0] if pending else None
     st.rerun()
+
+
+def _dataset_labels(paths: list[Path]) -> dict[Path, str]:
+    labels: dict[Path, str] = {}
+    dataset_num = 1
+    for p in paths:
+        if p.name == DEMO_FILENAME:
+            labels[p] = "🧪 Demo / Practice Dataset"
+        else:
+            labels[p] = f"Dataset {dataset_num}"
+            dataset_num += 1
+    return labels
 
 
 # ── Instructions screen ─────────────────────────────────────────────────────────
@@ -60,22 +77,23 @@ if not st.session_state.instructions_ack:
 # ── Upload screen ──────────────────────────────────────────────────────────────
 if st.session_state.df is None:
     st.title("🏷️ Annotation Tool")
-    st.markdown("Pick a JSON file from `data/raw/` or upload one to start annotating.")
+    st.markdown("Choose a dataset below to start annotating, or upload your own file.")
 
     raw_files = list_raw_json_files()
     if raw_files:
-        choice = st.selectbox("Files in data/raw/", raw_files, format_func=lambda p: p.name)
-        if st.button("📂 Load selected file"):
+        labels = _dataset_labels(raw_files)
+        choice = st.selectbox("Available datasets", raw_files, format_func=lambda p: labels[p])
+        if st.button("📂 Load selected dataset"):
             df, filename, summary = resolve_load(choice.name, choice)
-            _start_annotating(df, filename, summary)
+            _start_annotating(df, filename, summary, labels[choice])
     else:
-        st.info("No JSON files found in `data/raw/`.")
+        st.info("No datasets are available right now.")
 
     st.markdown("---")
     uploaded = st.file_uploader("Or upload a .json file", type=["json"])
     if uploaded:
         df, filename, summary = resolve_load(uploaded.name, uploaded)
-        _start_annotating(df, filename, summary)
+        _start_annotating(df, filename, summary, uploaded.name)
 
     st.stop()
 
@@ -90,7 +108,7 @@ done_count = total - len(pending)
 col_title, col_actions = st.columns([3, 2])
 with col_title:
     st.title("🏷️ Annotation Tool")
-    st.caption(f"📄 {st.session_state.filename}")
+    st.caption(f"📄 {st.session_state.display_name}")
 
 with col_actions:
     st.markdown("<div style='height:1.6rem'></div>", unsafe_allow_html=True)
@@ -109,6 +127,7 @@ with col_actions:
         if st.button("📂 Load a new file", use_container_width=True):
             st.session_state.df = None
             st.session_state.filename = None
+            st.session_state.display_name = None
             st.session_state.summary = None
             st.session_state.current_idx = None
             st.rerun()
