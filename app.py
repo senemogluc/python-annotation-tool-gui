@@ -21,7 +21,13 @@ def _load_css(path: str) -> None:
 
 _load_css("assets/styles.css")
 
-for _k, _v in [("df", None), ("filename", None), ("current_idx", None), ("summary", None)]:
+for _k, _v in [
+    ("df", None),
+    ("filename", None),
+    ("current_idx", None),
+    ("summary", None),
+    ("instructions_ack", False),
+]:
     if _k not in st.session_state:
         st.session_state[_k] = _v
 
@@ -33,6 +39,22 @@ def _start_annotating(df, filename, summary) -> None:
     st.session_state.summary = summary
     st.session_state.current_idx = pending[0] if pending else None
     st.rerun()
+
+
+# ── Instructions screen ─────────────────────────────────────────────────────────
+if not st.session_state.instructions_ack:
+    instructions_path = Path("instructions.md")
+    instructions_text = instructions_path.read_text().strip()
+    if instructions_text:
+        st.markdown(instructions_text)
+    else:
+        st.title("🏷️ Annotation Tool — Instructions")
+        st.warning("instructions.md is empty. Add annotation guidelines there before annotators start.")
+    ack = st.checkbox("I have read and understood the instructions above.")
+    if st.button("Continue to annotation tool ➜", disabled=not ack):
+        st.session_state.instructions_ack = True
+        st.rerun()
+    st.stop()
 
 
 # ── Upload screen ──────────────────────────────────────────────────────────────
