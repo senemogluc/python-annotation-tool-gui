@@ -165,8 +165,8 @@ with nav_next:
 
 label = current_label(row)
 st.markdown(
-    f"**Question Type:** `{row.get('question_type') or '—'}` &nbsp;&nbsp; "
-    f"**Perturbation Type:** `{row.get('perturbation_type') or '—'}` &nbsp;&nbsp; "
+    f"**Question:** `{row.get('question') or '—'}` &nbsp;&nbsp; "
+    f"**Answer:** `{row.get('answer') or '—'}` &nbsp;&nbsp; "
     f"**Current label:** {label or '_not yet annotated_'}"
 )
 
@@ -175,10 +175,10 @@ st.markdown("---")
 # Texts
 left, right = st.columns(2)
 with left:
-    st.markdown("**📄 Original Text**")
+    st.markdown("**📄 Original Evidence**")
     st.info(str(row.get("source_text") or ""))
 with right:
-    st.markdown("**✏️ Perturbed Text**")
+    st.markdown("**✏️ Perturbed Evidence**")
     st.warning(str(row.get("perturbed_text") or ""))
 
 st.markdown("---")
