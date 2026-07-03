@@ -164,11 +164,9 @@ with nav_next:
         st.rerun()
 
 label = current_label(row)
-st.markdown(
-    f"**Question:** `{row.get('question') or '—'}` &nbsp;&nbsp; "
-    f"**Answer:** `{row.get('answer') or '—'}` &nbsp;&nbsp; "
-    f"**Current label:** {label or '_not yet annotated_'}"
-)
+st.markdown(f"**Question:** `{row.get('question') or '—'}`")
+st.markdown(f"**Answer:** `{row.get('answer') or '—'}`")
+st.markdown(f"**Current label:** {label or '_not yet annotated_'}")
 
 st.markdown("---")
 
