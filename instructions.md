@@ -28,14 +28,11 @@ The wording may change, but the key facts stay the same: entities, numbers, date
 
 Examples:
 
-- `The Volkswagen Group consists of two divisions.`
-  -> `Two divisions comprise the Volkswagen Group.`
+- `The Volkswagen Group consists of two divisions.` -> `Two divisions comprise the Volkswagen Group.`
 
-- `The company reported EUR 3 million.`
-  -> `The company reported 3,000,000 euros.`
+- `The company reported EUR 3 million.` -> `The company reported 3,000,000 euros.`
 
-- `Sales revenue was on a level with the prior year.`
-  -> `Sales revenue was comparable to the previous year.`
+- `Sales revenue was on a level with the prior year.` -> `Sales revenue was comparable to the previous year.`
 
 ### Alter
 
@@ -45,14 +42,11 @@ This includes changes in numbers, dates, entities, comparison, direction, calcul
 
 Examples:
 
-- `The Volkswagen Group consists of two divisions.`
-  -> `The Volkswagen Group consists of three divisions.`
+- `The Volkswagen Group consists of two divisions.` -> `The Volkswagen Group consists of three divisions.`
 
-- `The models were successfully launched.`
-  -> `The models failed to launch.`
+- `The models were successfully launched.` -> `The models failed to launch.`
 
-- `Deliveries increased by 40.8%.`
-  -> `Deliveries declined by 40.8%.`
+- `Deliveries increased by 40.8%.` -> `Deliveries declined by 40.8%.`
 
 ### Not Sure
 
@@ -62,9 +56,7 @@ Use it when the text is unclear, incomplete, ambiguous, or too garbled to interp
 
 ## Decision Rule
 
-Ask yourself:
-
-Did the perturbation only change the wording, or did it change the meaning?
+Ask yourself: Did the perturbation only change the wording, or did it change the meaning?
 
 - Same meaning: Preserve.
 - Different meaning: Alter.
