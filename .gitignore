@@ -224,3 +224,9 @@ CLAUDE.md
 # Data files
 *.xlsx
 *.xls
+
+# Annotation autosave state
+data/autosave/
+
+# Per-annotator working data (real files, uploaded in-app rather than committed)
+data/raw/annotator_[A-D].json
