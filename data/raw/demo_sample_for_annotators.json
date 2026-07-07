@@ -1,228 +1,422 @@
-{
-  "1": [
-    {
-      "question_id": "demo0001",
-      "question_type": "lookup_text",
-      "question": "How many manufacturing plants does Aurora Kinetics operate?",
-      "context": [
+[
+  {
+    "question_id": "mock_q001",
+    "item_id": "mock_q001__model_alpha__llm_evidence_insight_preserve",
+    "model_name": "model_alpha",
+    "year": "2022",
+    "question_type": "insight",
+    "question": "Discuss why maintaining cash reserves was important for Aurora Retail Group in 2022.",
+    "context": {
+      "paragraphs": [
         {
-          "para_id": "p1",
-          "text": "Aurora Kinetics operates three manufacturing plants: one in Lyon, one in Porto, and one in Krakow."
+          "para_id": "MOCK2022_P001",
+          "text": "Aurora Retail Group increased its cash reserves in 2022 to support store modernization and supply chain flexibility."
         }
-      ],
-      "answer": "three",
-      "unit": "",
-      "evidence": {
-        "para_id": "p1",
-        "char_start": 0,
-        "char_end": 88,
-        "text": "Aurora Kinetics operates four manufacturing plants: one in Lyon, one in Porto, and one in Krakow.",
-        "original_text": "Aurora Kinetics operates three manufacturing plants: one in Lyon, one in Porto, and one in Krakow."
+      ]
+    },
+    "answer": "Cash reserves helped the company support modernization plans and respond to supply chain uncertainty.",
+    "unit": "",
+    "evidence": [
+      {
+        "type": "text",
+        "claim_text": "Aurora Retail Group increased cash reserves to support modernization and supply chain flexibility.",
+        "evidence": [
+          {
+            "para_id": "MOCK2022_P001",
+            "char_start": 0,
+            "char_end": 122,
+            "text": "Aurora Retail Group increased its cash reserves in 2022 to support store modernization and supply chain flexibility.",
+            "original_text": "Aurora Retail Group raised its cash reserves to fund store upgrades and improve supply chain flexibility."
+          }
+        ]
+      }
+    ],
+    "perturbation_target": "evidence",
+    "perturbation_type": "llm_evidence_insight_preserve",
+    "source_text": "Aurora Retail Group raised its cash reserves to fund store upgrades and improve supply chain flexibility.",
+    "perturbed_text": "Aurora Retail Group increased its cash reserves in 2022 to support store modernization and supply chain flexibility.",
+    "source_claim": "Aurora Retail Group increased cash reserves to support modernization and supply chain flexibility.",
+    "reason": "The meaning is preserved because the rewritten evidence keeps the same financial action and purpose.",
+    "strategy_used": "Paraphrased wording while keeping the same claim direction.",
+    "claim_focus": "Cash reserves supported modernization and flexibility.",
+    "claim_relevant_span": "increased cash reserves to support modernization and supply chain flexibility",
+    "evidence_target_span": "increased its cash reserves in 2022 to support store modernization and supply chain flexibility",
+    "preserve": true,
+    "nli_label": "entailment",
+    "nli_confidence": 0.94,
+    "nli_per_model": {
+      "nli_model_1": {
+        "label": "entailment",
+        "confidence": 0.94
       },
-      "perturbation_target": "evidence",
-      "perturbation_type": "llm_evidence_lookuptext_alter",
-      "perturbed_text": "Aurora Kinetics operates four manufacturing plants: one in Lyon, one in Porto, and one in Krakow.",
-      "source_text": "Aurora Kinetics operates three manufacturing plants: one in Lyon, one in Porto, and one in Krakow.",
-      "source_claim": null,
-      "reason": "Demo example: the plant count was changed from three to four, contradicting the original claim.",
-      "strategy_used": "Changed the count from 'three' to 'four'.",
-      "claim_focus": null,
-      "claim_relevant_span": null,
-      "evidence_target_span": "three",
-      "preserve": false,
-      "nli_label": "contradiction",
-      "nli_confidence": 0.97,
-      "nli_per_model": {"demo-model": "contradiction"},
-      "judge_label": "altered",
-      "judge_score": 1.0,
-      "judge_scores_all": "1,1,1",
-      "judge_rationale": "Demo rationale: the numeric fact was changed.",
-      "bertscore_f1": 0.98,
-      "final_label": "altered",
-      "final_fusion_score": 0.01,
-      "evaluation_agreement": true
-    }
-  ],
-  "2": [
-    {
-      "question_id": "demo0002",
-      "question_type": "lookup_text",
-      "question": "Where is Aurora Kinetics headquartered?",
-      "context": [
+      "nli_model_2": {
+        "label": "entailment",
+        "confidence": 0.88
+      }
+    },
+    "judge_label": "preserved",
+    "judge_score": 4.0,
+    "judge_scores_all": "4,4,4,4,4",
+    "judge_rationale": "The rewritten sentence keeps the same factual meaning.",
+    "bertscore_f1": 0.91,
+    "final_label": "preserved",
+    "final_fusion_score": 0.97,
+    "evaluation_agreement": true,
+    "type": "preserve",
+    "set_type": "anchor",
+    "assigned_pair": ["A", "B"],
+    "annotator_A": null,
+    "annotator_B": null,
+    "annotator_C": null,
+    "annotator_D": null
+  },
+  {
+    "question_id": "mock_q002",
+    "item_id": "mock_q002__model_beta__llm_evidence_lookuptext_alter",
+    "model_name": "model_beta",
+    "year": "2023",
+    "question_type": "lookup_text",
+    "question": "What caused the decrease in operating expenses?",
+    "context": [
+      {
+        "para_id": "MOCK2023_P002",
+        "text": "Operating expenses decreased mainly because logistics costs were reduced during the year."
+      }
+    ],
+    "answer": "lower logistics costs",
+    "unit": "",
+    "evidence": [
+      {
+        "type": "text",
+        "claim_text": "Operating expenses decreased mainly because logistics costs were reduced.",
+        "evidence": [
+          {
+            "para_id": "MOCK2023_P002",
+            "char_start": 0,
+            "char_end": 84,
+            "text": "Operating expenses increased mainly because logistics costs were higher during the year.",
+            "original_text": "Operating expenses decreased mainly because logistics costs were reduced during the year."
+          }
+        ]
+      }
+    ],
+    "perturbation_target": "evidence",
+    "perturbation_type": "llm_evidence_lookuptext_alter",
+    "source_text": "Operating expenses decreased mainly because logistics costs were reduced during the year.",
+    "perturbed_text": "Operating expenses increased mainly because logistics costs were higher during the year.",
+    "source_claim": "Operating expenses decreased mainly because logistics costs were reduced.",
+    "reason": "The perturbation changes both the direction of expenses and the cause.",
+    "strategy_used": "Changed decrease to increase and reduced costs to higher costs.",
+    "claim_focus": "Expense decrease caused by lower logistics costs.",
+    "claim_relevant_span": "decreased mainly because logistics costs were reduced",
+    "evidence_target_span": "increased mainly because logistics costs were higher",
+    "preserve": false,
+    "nli_label": "contradiction",
+    "nli_confidence": 0.89,
+    "nli_per_model": {
+      "nli_model_1": {
+        "label": "contradiction",
+        "confidence": 0.89
+      },
+      "nli_model_2": {
+        "label": "contradiction",
+        "confidence": 0.84
+      }
+    },
+    "judge_label": "altered",
+    "judge_score": 1.0,
+    "judge_scores_all": "1,1,1,2,1",
+    "judge_rationale": "The perturbed evidence reverses the original meaning.",
+    "bertscore_f1": 0.86,
+    "final_label": "altered",
+    "final_fusion_score": 0.08,
+    "evaluation_agreement": true,
+    "type": "alter",
+    "set_type": "remainder",
+    "assigned_pair": ["A", "C"],
+    "annotator_A": null,
+    "annotator_B": null,
+    "annotator_C": null,
+    "annotator_D": null
+  },
+  {
+    "question_id": "mock_q003",
+    "item_id": "mock_q003__model_gamma__llm_evidence_insight_alter",
+    "model_name": "model_gamma",
+    "year": "2021",
+    "question_type": "insight",
+    "question": "Explain the effect of the new subscription service on revenue stability.",
+    "context": {
+      "paragraphs": [
         {
-          "para_id": "p1",
-          "text": "Aurora Kinetics is headquartered in Amsterdam, the Netherlands."
+          "para_id": "MOCK2021_P003",
+          "text": "The new subscription service improved revenue stability by increasing recurring monthly income."
         }
-      ],
-      "answer": "Amsterdam, the Netherlands",
-      "unit": "",
-      "evidence": {
-        "para_id": "p1",
-        "char_start": 0,
-        "char_end": 55,
-        "text": "The Netherlands, specifically Amsterdam, is home to Aurora Kinetics' headquarters.",
-        "original_text": "Aurora Kinetics is headquartered in Amsterdam, the Netherlands."
+      ]
+    },
+    "answer": "It improved stability by increasing recurring income.",
+    "unit": "",
+    "evidence": [
+      {
+        "type": "text",
+        "claim_text": "The subscription service improved revenue stability through recurring monthly income.",
+        "evidence": [
+          {
+            "para_id": "MOCK2021_P003",
+            "char_start": 0,
+            "char_end": 88,
+            "text": "The new subscription service weakened revenue stability by reducing recurring monthly income.",
+            "original_text": "The new subscription service improved revenue stability by increasing recurring monthly income."
+          }
+        ]
+      }
+    ],
+    "perturbation_target": "evidence",
+    "perturbation_type": "llm_evidence_insight_alter",
+    "source_text": "The new subscription service improved revenue stability by increasing recurring monthly income.",
+    "perturbed_text": "The new subscription service weakened revenue stability by reducing recurring monthly income.",
+    "source_claim": "The subscription service improved revenue stability through recurring monthly income.",
+    "reason": "The meaning is altered because the positive effect is changed into a negative effect.",
+    "strategy_used": "Flipped the causal direction of the financial effect.",
+    "claim_focus": "Subscription service improved revenue stability.",
+    "claim_relevant_span": "improved revenue stability by increasing recurring monthly income",
+    "evidence_target_span": "weakened revenue stability by reducing recurring monthly income",
+    "preserve": false,
+    "nli_label": "contradiction",
+    "nli_confidence": 0.92,
+    "nli_per_model": {
+      "nli_model_1": {
+        "label": "contradiction",
+        "confidence": 0.92
       },
-      "perturbation_target": "evidence",
-      "perturbation_type": "llm_evidence_lookuptext_preserve",
-      "perturbed_text": "The Netherlands, specifically Amsterdam, is home to Aurora Kinetics' headquarters.",
-      "source_text": "Aurora Kinetics is headquartered in Amsterdam, the Netherlands.",
-      "source_claim": null,
-      "reason": "Demo example: sentence restructured but the same location facts are preserved.",
-      "strategy_used": "Reworded the sentence while keeping the same meaning.",
-      "claim_focus": null,
-      "claim_relevant_span": null,
-      "evidence_target_span": "Amsterdam, the Netherlands",
-      "preserve": true,
-      "nli_label": "entailment",
-      "nli_confidence": 0.95,
-      "nli_per_model": {"demo-model": "entailment"},
-      "judge_label": "preserved",
-      "judge_score": 4.0,
-      "judge_scores_all": "4,4,4",
-      "judge_rationale": "Demo rationale: meaning is unchanged, only phrasing differs.",
-      "bertscore_f1": 0.91,
-      "final_label": "preserved",
-      "final_fusion_score": 0.97,
-      "evaluation_agreement": true
-    }
-  ],
-  "3": [
-    {
-      "question_id": "demo0003",
-      "question_type": "insight",
-      "question": "What does Aurora Kinetics' revenue growth in 2025 suggest about its market position?",
-      "context": [
+      "nli_model_2": {
+        "label": "neutral",
+        "confidence": 0.61
+      }
+    },
+    "judge_label": "altered",
+    "judge_score": 1.0,
+    "judge_scores_all": "1,1,1,1,1",
+    "judge_rationale": "The perturbed version changes the original claim direction.",
+    "bertscore_f1": 0.84,
+    "final_label": "altered",
+    "final_fusion_score": 0.05,
+    "evaluation_agreement": true,
+    "type": "alter",
+    "set_type": "anchor",
+    "assigned_pair": ["B", "D"],
+    "annotator_A": null,
+    "annotator_B": null,
+    "annotator_C": null,
+    "annotator_D": null
+  },
+  {
+    "question_id": "mock_q004",
+    "item_id": "mock_q004__model_alpha__llm_evidence_lookuptext_preserve",
+    "model_name": "model_alpha",
+    "year": "2024",
+    "question_type": "lookup_text",
+    "question": "What did the company use the proceeds for?",
+    "context": [
+      {
+        "para_id": "MOCK2024_P004",
+        "text": "The company used the proceeds to refinance existing debt and fund equipment purchases."
+      }
+    ],
+    "answer": "to refinance existing debt and fund equipment purchases",
+    "unit": "",
+    "evidence": [
+      {
+        "type": "text",
+        "claim_text": "The proceeds were used for debt refinancing and equipment purchases.",
+        "evidence": [
+          {
+            "para_id": "MOCK2024_P004",
+            "char_start": 0,
+            "char_end": 83,
+            "text": "The proceeds were allocated to refinance outstanding debt and purchase new equipment.",
+            "original_text": "The company used the proceeds to refinance existing debt and fund equipment purchases."
+          }
+        ]
+      }
+    ],
+    "perturbation_target": "evidence",
+    "perturbation_type": "llm_evidence_lookuptext_preserve",
+    "source_text": "The company used the proceeds to refinance existing debt and fund equipment purchases.",
+    "perturbed_text": "The proceeds were allocated to refinance outstanding debt and purchase new equipment.",
+    "source_claim": "The proceeds were used for debt refinancing and equipment purchases.",
+    "reason": "The rewritten text preserves the same use of proceeds.",
+    "strategy_used": "Used synonymous wording without changing the answer.",
+    "claim_focus": "Use of proceeds.",
+    "claim_relevant_span": "refinance existing debt and fund equipment purchases",
+    "evidence_target_span": "refinance outstanding debt and purchase new equipment",
+    "preserve": true,
+    "nli_label": "entailment",
+    "nli_confidence": 0.9,
+    "nli_per_model": {
+      "nli_model_1": {
+        "label": "entailment",
+        "confidence": 0.9
+      },
+      "nli_model_2": {
+        "label": "entailment",
+        "confidence": 0.85
+      }
+    },
+    "judge_label": "preserved",
+    "judge_score": 4.0,
+    "judge_scores_all": "4,4,4,4,3",
+    "judge_rationale": "The answer remains unchanged after paraphrasing.",
+    "bertscore_f1": 0.9,
+    "final_label": "preserved",
+    "final_fusion_score": 0.95,
+    "evaluation_agreement": true,
+    "type": "preserve",
+    "set_type": "remainder",
+    "assigned_pair": ["C", "D"],
+    "annotator_A": null,
+    "annotator_B": null,
+    "annotator_C": null,
+    "annotator_D": null
+  },
+  {
+    "question_id": "mock_q005",
+    "item_id": "mock_q005__model_beta__llm_evidence_insight_preserve",
+    "model_name": "model_beta",
+    "year": "2020",
+    "question_type": "insight",
+    "question": "Why was supplier diversification relevant to production continuity?",
+    "context": {
+      "paragraphs": [
         {
-          "para_id": "p1",
-          "text": "Aurora Kinetics' revenue grew 12% year-over-year in 2025, outpacing the industry average of 5%."
+          "para_id": "MOCK2020_P005",
+          "text": "Supplier diversification reduced dependency on a single vendor and supported production continuity."
         }
-      ],
-      "answer": "Aurora Kinetics gained market share relative to competitors.",
-      "unit": "",
-      "evidence": {
-        "para_id": "p1",
-        "char_start": 0,
-        "char_end": 97,
-        "text": "Aurora Kinetics' revenue shrank 12% year-over-year in 2025, lagging behind the industry average of 5%.",
-        "original_text": "Aurora Kinetics' revenue grew 12% year-over-year in 2025, outpacing the industry average of 5%."
+      ]
+    },
+    "answer": "It reduced dependency on one vendor and supported continuity.",
+    "unit": "",
+    "evidence": [
+      {
+        "type": "text",
+        "claim_text": "Supplier diversification supported production continuity by reducing single-vendor dependency.",
+        "evidence": [
+          {
+            "para_id": "MOCK2020_P005",
+            "char_start": 0,
+            "char_end": 88,
+            "text": "Using a broader supplier base lowered reliance on one vendor and helped maintain production continuity.",
+            "original_text": "Supplier diversification reduced dependency on a single vendor and supported production continuity."
+          }
+        ]
+      }
+    ],
+    "perturbation_target": "evidence",
+    "perturbation_type": "llm_evidence_insight_preserve",
+    "source_text": "Supplier diversification reduced dependency on a single vendor and supported production continuity.",
+    "perturbed_text": "Using a broader supplier base lowered reliance on one vendor and helped maintain production continuity.",
+    "source_claim": "Supplier diversification supported production continuity by reducing single-vendor dependency.",
+    "reason": "The same causal relationship is preserved.",
+    "strategy_used": "Rephrased the sentence using equivalent terms.",
+    "claim_focus": "Diversification supported continuity.",
+    "claim_relevant_span": "reduced dependency on a single vendor and supported production continuity",
+    "evidence_target_span": "lowered reliance on one vendor and helped maintain production continuity",
+    "preserve": true,
+    "nli_label": "neutral",
+    "nli_confidence": 0.57,
+    "nli_per_model": {
+      "nli_model_1": {
+        "label": "neutral",
+        "confidence": 0.57
       },
-      "perturbation_target": "evidence",
-      "perturbation_type": "llm_evidence_insight_alter",
-      "perturbed_text": "Aurora Kinetics' revenue shrank 12% year-over-year in 2025, lagging behind the industry average of 5%.",
-      "source_text": "Aurora Kinetics' revenue grew 12% year-over-year in 2025, outpacing the industry average of 5%.",
-      "source_claim": null,
-      "reason": "Demo example: growth was flipped to decline, reversing the insight's direction.",
-      "strategy_used": "Reversed the growth direction and comparison to the industry average.",
-      "claim_focus": null,
-      "claim_relevant_span": null,
-      "evidence_target_span": "grew 12% year-over-year",
-      "preserve": false,
-      "nli_label": "contradiction",
-      "nli_confidence": 0.96,
-      "nli_per_model": {"demo-model": "contradiction"},
-      "judge_label": "altered",
-      "judge_score": 1.0,
-      "judge_scores_all": "1,1,1",
-      "judge_rationale": "Demo rationale: the trend direction was reversed.",
-      "bertscore_f1": 0.89,
-      "final_label": "altered",
-      "final_fusion_score": 0.02,
-      "evaluation_agreement": true
-    }
-  ],
-  "4": [
-    {
-      "question_id": "demo0004",
-      "question_type": "insight",
-      "question": "What does Aurora Kinetics' investment in R&D imply about its strategic priorities?",
-      "context": [
-        {
-          "para_id": "p1",
-          "text": "Aurora Kinetics increased its R&D budget by 20% in 2025, signaling a focus on long-term innovation."
-        }
-      ],
-      "answer": "The company is prioritizing long-term innovation over short-term cost savings.",
-      "unit": "",
-      "evidence": {
-        "para_id": "p1",
-        "char_start": 0,
-        "char_end": 100,
-        "text": "In 2025, Aurora Kinetics raised its research and development spending by a fifth, pointing to a focus on long-term innovation.",
-        "original_text": "Aurora Kinetics increased its R&D budget by 20% in 2025, signaling a focus on long-term innovation."
+      "nli_model_2": {
+        "label": "entailment",
+        "confidence": 0.72
+      }
+    },
+    "judge_label": "preserved",
+    "judge_score": 3.0,
+    "judge_scores_all": "3,4,3,4,3",
+    "judge_rationale": "The wording changes, but the central meaning is still preserved.",
+    "bertscore_f1": 0.88,
+    "final_label": "preserved",
+    "final_fusion_score": 0.82,
+    "evaluation_agreement": false,
+    "type": "preserve",
+    "set_type": "remainder",
+    "assigned_pair": ["A", "D"],
+    "annotator_A": null,
+    "annotator_B": null,
+    "annotator_C": null,
+    "annotator_D": null
+  },
+  {
+    "question_id": "mock_q006",
+    "item_id": "mock_q006__model_gamma__llm_evidence_lookuptext_alter",
+    "model_name": "model_gamma",
+    "year": "2023",
+    "question_type": "lookup_text",
+    "question": "Which segment reported the highest revenue growth?",
+    "context": [
+      {
+        "para_id": "MOCK2023_P006",
+        "text": "The cloud services segment reported the highest revenue growth among all business units."
+      }
+    ],
+    "answer": "cloud services segment",
+    "unit": "",
+    "evidence": [
+      {
+        "type": "text",
+        "claim_text": "The cloud services segment had the highest revenue growth.",
+        "evidence": [
+          {
+            "para_id": "MOCK2023_P006",
+            "char_start": 0,
+            "char_end": 82,
+            "text": "The hardware segment reported the highest revenue growth among all business units.",
+            "original_text": "The cloud services segment reported the highest revenue growth among all business units."
+          }
+        ]
+      }
+    ],
+    "perturbation_target": "evidence",
+    "perturbation_type": "llm_evidence_lookuptext_alter",
+    "source_text": "The cloud services segment reported the highest revenue growth among all business units.",
+    "perturbed_text": "The hardware segment reported the highest revenue growth among all business units.",
+    "source_claim": "The cloud services segment had the highest revenue growth.",
+    "reason": "The answer entity is changed from one segment to another.",
+    "strategy_used": "Replaced the claim-relevant entity.",
+    "claim_focus": "Highest-growth segment.",
+    "claim_relevant_span": "cloud services segment",
+    "evidence_target_span": "hardware segment",
+    "preserve": false,
+    "nli_label": "contradiction",
+    "nli_confidence": 0.87,
+    "nli_per_model": {
+      "nli_model_1": {
+        "label": "contradiction",
+        "confidence": 0.87
       },
-      "perturbation_target": "evidence",
-      "perturbation_type": "llm_evidence_insight_preserve",
-      "perturbed_text": "In 2025, Aurora Kinetics raised its research and development spending by a fifth, pointing to a focus on long-term innovation.",
-      "source_text": "Aurora Kinetics increased its R&D budget by 20% in 2025, signaling a focus on long-term innovation.",
-      "source_claim": null,
-      "reason": "Demo example: reworded with a synonym for R&D and 'a fifth' instead of '20%', same meaning.",
-      "strategy_used": "Paraphrased using synonyms and an equivalent fraction for the percentage.",
-      "claim_focus": null,
-      "claim_relevant_span": null,
-      "evidence_target_span": "increased its R&D budget by 20%",
-      "preserve": true,
-      "nli_label": "entailment",
-      "nli_confidence": 0.93,
-      "nli_per_model": {"demo-model": "entailment"},
-      "judge_label": "preserved",
-      "judge_score": 4.0,
-      "judge_scores_all": "4,4,4",
-      "judge_rationale": "Demo rationale: numeric equivalence and same implication preserved.",
-      "bertscore_f1": 0.88,
-      "final_label": "preserved",
-      "final_fusion_score": 0.95,
-      "evaluation_agreement": true
-    }
-  ],
-  "5": [
-    {
-      "question_id": "demo0005",
-      "question_type": "lookup_text",
-      "question": "When was Aurora Kinetics founded?",
-      "context": [
-        {
-          "para_id": "p1",
-          "text": "Aurora Kinetics was founded in 2011 by a group of robotics engineers."
-        }
-      ],
-      "answer": "2011",
-      "unit": "",
-      "evidence": {
-        "para_id": "p1",
-        "char_start": 0,
-        "char_end": 68,
-        "text": "Aurora Kinetics was founded in 2014 by a group of robotics engineers.",
-        "original_text": "Aurora Kinetics was founded in 2011 by a group of robotics engineers."
-      },
-      "perturbation_target": "evidence",
-      "perturbation_type": "llm_evidence_lookuptext_alter",
-      "perturbed_text": "Aurora Kinetics was founded in 2014 by a group of robotics engineers.",
-      "source_text": "Aurora Kinetics was founded in 2011 by a group of robotics engineers.",
-      "source_claim": null,
-      "reason": "Demo example: the founding year was changed from 2011 to 2014.",
-      "strategy_used": "Changed the year from '2011' to '2014'.",
-      "claim_focus": null,
-      "claim_relevant_span": null,
-      "evidence_target_span": "2011",
-      "preserve": false,
-      "nli_label": "contradiction",
-      "nli_confidence": 0.98,
-      "nli_per_model": {"demo-model": "contradiction"},
-      "judge_label": "altered",
-      "judge_score": 1.0,
-      "judge_scores_all": "1,1,1",
-      "judge_rationale": "Demo rationale: the founding date fact was changed.",
-      "bertscore_f1": 0.97,
-      "final_label": "altered",
-      "final_fusion_score": 0.01,
-      "evaluation_agreement": true
-    }
-  ],
-  "_summary": {
-    "question_type_counts": {
-      "lookup_text": {"altered": 2, "preserved": 1},
-      "insight": {"altered": 1, "preserved": 1}
-    }
+      "nli_model_2": {
+        "label": "neutral",
+        "confidence": 0.55
+      }
+    },
+    "judge_label": "altered",
+    "judge_score": 1.0,
+    "judge_scores_all": "1,1,2,1,1",
+    "judge_rationale": "The perturbed text changes the segment that answers the question.",
+    "bertscore_f1": 0.83,
+    "final_label": "altered",
+    "final_fusion_score": 0.11,
+    "evaluation_agreement": true,
+    "type": "alter",
+    "set_type": "anchor",
+    "assigned_pair": ["B", "C"],
+    "annotator_A": null,
+    "annotator_B": null,
+    "annotator_C": null,
+    "annotator_D": null
   }
-}
+]
