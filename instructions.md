@@ -16,7 +16,7 @@ Your annotation will help evaluate model robustness through Consistency and Fait
 - Original text: text before modification.
 - Perturbed text: modified text.
 
-Do not judge grammar or fluency. Judge only meaning.
+Do not judge grammar or fluency for its own sake — judge meaning, except for the Malformed label below, which exists specifically for text that is too broken to read as a sentence.
 
 ## Labels
 
@@ -54,6 +54,17 @@ Examples:
 - `Deliveries increased by 40.8%.`
   -> `Deliveries declined by 40.8%.`
 
+### Malformed
+
+Choose Malformed if the perturbed text itself is not a valid, well-formed sentence — it's truncated, garbled, or grammatically broken — regardless of whether you could otherwise judge its meaning.
+
+Examples:
+
+- `revenue increas by the the mill lion`
+- `Deliveries were up 40 the vehicles.`
+
+Not Sure remains for well-formed sentences where you simply can't tell whether meaning was preserved or altered.
+
 ### Not Sure
 
 Choose Not Sure only if you cannot confidently decide.
@@ -64,7 +75,9 @@ Use it when the text is unclear, incomplete, ambiguous, or too garbled to interp
 
 Ask yourself:
 
-Did the perturbation only change the wording, or did it change the meaning?
+Is the perturbed text itself well-formed? If not: Malformed.
+
+If it is well-formed, did the perturbation only change the wording, or did it change the meaning?
 
 - Same meaning: Preserve.
 - Different meaning: Alter.
