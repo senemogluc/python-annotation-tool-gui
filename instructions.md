@@ -51,20 +51,28 @@ Examples:
 
 ### Malformed
 
-Choose Malformed if the perturbed text itself is not a valid, well-formed sentence — it's truncated, garbled, or grammatically broken — regardless of whether you could otherwise judge its meaning.
+Choose Malformed when the perturbed text should not be evaluated as a normal perturbation because there is an output-generation problem.
+
+Use Malformed if:
+
+- the perturbed text is identical to the original text,
+- the perturbed text contains model reasoning or generation artifacts, such as `<think>`, chain-of-thought content, prompt fragments, or meta-comments,
+- the perturbed text is truncated, garbled, or grammatically broken to the point that it cannot be treated as a valid sentence.
 
 Examples:
 
 - `revenue increas by the the mill lion`
 - `Deliveries were up 40 the vehicles.`
-
-Not Sure remains for well-formed sentences where you simply can't tell whether meaning was preserved or altered.
+- `<think> I need to change the number but preserve the meaning... </think>`
+- the original and perturbed texts are exactly the same
 
 ### Not Sure
 
-Choose Not Sure only if you cannot confidently decide.
+Choose Not Sure only when the perturbed text is well-formed enough to evaluate, but you cannot confidently decide whether the meaning is Preserved or Altered.
 
-Use it when the text is unclear, incomplete, ambiguous, or too garbled to interpret. Do not use it only because the sentence is awkward or technical.
+Use Not Sure when the sentence is understandable, but the semantic relation between the original and perturbed text is unclear, ambiguous, or difficult to judge.
+
+Do not choose Not Sure only because the sentence is awkward, technical, or hard to read. If the problem is caused by a generation error, such as identical output, chain-of-thought content, truncation, or severe grammatical corruption, choose Malformed instead.
 
 ## Decision Rule
 
