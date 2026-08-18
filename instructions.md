@@ -7,16 +7,16 @@ This data contains contrast sets for Volkswagen annual-report QA. The generator 
 - Preserve: semantics unchanged.
 - Alter: semantics flipped or meaningfully changed.
 
-Your annotation will help evaluate model robustness through Consistency and Faithfulness.
-
 ## What You See
 
-- Question type: shown only for context.
-- Perturbation type: shown only for context.
+For each item, you will see:
+
 - Original text: text before modification.
 - Perturbed text: modified text.
 
-Do not judge grammar or fluency for its own sake — judge meaning, except for the Malformed label below, which exists specifically for text that is too broken to read as a sentence.
+You are **not** shown the intended perturbation type, the source model that generated the perturbation, or other annotators' labels. Make your decision independently based only on the semantic relationship between the original and perturbed texts.
+
+Do not judge grammar or fluency for its own sake - judge meaning, except for the Malformed label below, which exists specifically for text that is too broken to read as a sentence.
 
 ## Labels
 
@@ -46,8 +46,7 @@ Examples:
 
 - `The models were successfully launched.` -> `The models failed to launch.`
 
-- `Deliveries increased by 40.8%.`
-  -> `Deliveries declined by 40.8%.`
+- `Deliveries increased by 40.8%.` -> `Deliveries declined by 40.8%.`
 
 ### Malformed
 
@@ -85,3 +84,4 @@ If it is well-formed, did the perturbation only change the wording, or did it ch
 - Same meaning: Preserve.
 - Different meaning: Alter.
 - Cannot determine: Not Sure.
+- Output broken: Malformed.
