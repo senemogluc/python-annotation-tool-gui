@@ -29,9 +29,7 @@ The wording may change, but the key facts stay the same: entities, numbers, date
 Examples:
 
 - `The Volkswagen Group consists of two divisions.` -> `Two divisions comprise the Volkswagen Group.`
-
 - `The company reported EUR 3 million.` -> `The company reported 3,000,000 euros.`
-
 - `Sales revenue was on a level with the prior year.` -> `Sales revenue was comparable to the previous year.`
 
 ### Alter
@@ -43,9 +41,7 @@ This includes changes in numbers, dates, entities, comparison, direction, calcul
 Examples:
 
 - `The Volkswagen Group consists of two divisions.` -> `The Volkswagen Group consists of three divisions.`
-
 - `The models were successfully launched.` -> `The models failed to launch.`
-
 - `Deliveries increased by 40.8%.` -> `Deliveries declined by 40.8%.`
 
 ### Malformed
@@ -65,13 +61,13 @@ Examples:
 - `<think> I need to change the number but preserve the meaning... </think>`
 - the original and perturbed texts are exactly the same
 
-### Not Sure
+### Uncertain
 
-Choose Not Sure only when the perturbed text is well-formed enough to evaluate, but you cannot confidently decide whether the meaning is Preserved or Altered.
+Choose Uncertain only when the perturbed text is well-formed enough to evaluate, but you cannot confidently decide whether the meaning is Preserved or Altered.
 
-Use Not Sure when the sentence is understandable, but the semantic relation between the original and perturbed text is unclear, ambiguous, or difficult to judge.
+Use Uncertain when the sentence is understandable, but the semantic relation between the original and perturbed text is unclear, ambiguous, or difficult to judge.
 
-Do not choose Not Sure only because the sentence is awkward, technical, or hard to read. If the problem is caused by a generation error, such as identical output, chain-of-thought content, truncation, or severe grammatical corruption, choose Malformed instead.
+Do not choose Uncertain only because the sentence is awkward, technical, or hard to read. If the problem is caused by a generation error, such as identical output, chain-of-thought content, truncation, or severe grammatical corruption, choose Malformed instead.
 
 ## Decision Rule
 
@@ -83,5 +79,5 @@ If it is well-formed, did the perturbation only change the wording, or did it ch
 
 - Same meaning: Preserve.
 - Different meaning: Alter.
-- Cannot determine: Not Sure.
+- Cannot determine: Uncertain.
 - Output broken: Malformed.
